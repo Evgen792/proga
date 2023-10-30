@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>817</width>
+    <width>476</width>
     <height>610</height>
    </rect>
   </property>
@@ -20,10 +20,10 @@
    <widget class="QWidget" name="gridWidget" native="true">
     <property name="geometry">
      <rect>
-      <x>340</x>
-      <y>260</y>
+      <x>170</x>
+      <y>200</y>
       <width>160</width>
-      <height>281</height>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -130,7 +130,7 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>330</x>
+      <x>150</x>
       <y>40</y>
       <width>181</width>
       <height>61</height>
@@ -155,7 +155,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>280</x>
+      <x>100</x>
       <y>100</y>
       <width>291</width>
       <height>41</height>
@@ -174,6 +174,29 @@
     </property>
     <property name="text">
      <string>project change management</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_4">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>570</y>
+      <width>71</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(87, 87, 87);</string>
+    </property>
+    <property name="text">
+     <string>Admin</string>
     </property>
    </widget>
   </widget>

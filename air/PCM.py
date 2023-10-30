@@ -1,16 +1,16 @@
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import * 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_MainWindow(QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(817, 610)
+        MainWindow.resize(476, 610)
         MainWindow.setStyleSheet("background-color: rgb(218, 207, 183);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridWidget = QtWidgets.QWidget(self.centralwidget)
-        self.gridWidget.setGeometry(QtCore.QRect(340, 260, 160, 281))
+        self.gridWidget.setGeometry(QtCore.QRect(170, 200, 160, 311))
         self.gridWidget.setStyleSheet("background-color: rgba(191, 64, 64, 0);")
         self.gridWidget.setObjectName("gridWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridWidget)
@@ -50,6 +50,7 @@ class Ui_MainWindow(QMainWindow):
         self.lineEdit_Pass = QtWidgets.QLineEdit(self.gridWidget)
         self.lineEdit_Pass.setStyleSheet("background-color: rgba(255, 255, 255, 126);")
         self.lineEdit_Pass.setObjectName("lineEdit_Pass")
+        self.lineEdit_Pass.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.gridLayout.addWidget(self.lineEdit_Pass, 3, 0, 1, 1)
         self.label_Password = QtWidgets.QLabel(self.gridWidget)
         font = QtGui.QFont()
@@ -70,7 +71,7 @@ class Ui_MainWindow(QMainWindow):
         self.label_Login_2.setObjectName("label_Login_2")
         self.gridLayout.addWidget(self.label_Login_2, 0, 0, 1, 1)
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(330, 40, 181, 61))
+        self.label.setGeometry(QtCore.QRect(150, 40, 181, 61))
         font = QtGui.QFont()
         font.setFamily("URW Bookman")
         font.setPointSize(40)
@@ -81,7 +82,7 @@ class Ui_MainWindow(QMainWindow):
         self.label.setStyleSheet("background-color: rgba(191, 64, 64, 0);")
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
-        self.label_2.setGeometry(QtCore.QRect(280, 100, 291, 41))
+        self.label_2.setGeometry(QtCore.QRect(100, 100, 291, 41))
         font = QtGui.QFont()
         font.setFamily("URW Bookman")
         font.setPointSize(14)
@@ -90,6 +91,15 @@ class Ui_MainWindow(QMainWindow):
         self.label_2.setFont(font)
         self.label_2.setStyleSheet("background-color: rgba(191, 64, 64, 0);")
         self.label_2.setObjectName("label_2")
+        self.pushButton_4 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_4.setGeometry(QtCore.QRect(400, 570, 71, 31))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setWeight(75)
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setStyleSheet("background-color: rgb(87, 87, 87);")
+        self.pushButton_4.setObjectName("pushButton_4")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -105,3 +115,4 @@ class Ui_MainWindow(QMainWindow):
         self.label_Login_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:400;\">Login:</span></p></body></html>"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p>P C M</p></body></html>"))
         self.label_2.setText(_translate("MainWindow", "project change management"))
+        self.pushButton_4.setText(_translate("MainWindow", "Admin"))
