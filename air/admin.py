@@ -1,34 +1,13 @@
 from PyQt5.QtSql import *
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-import random
+
 
 class Admin(QMainWindow):
      
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
-        
-        db = QSqlDatabase.addDatabase('QPSQL')
-        db.setDatabaseName('progect')
-        db.setHostName('localhost')
-        db.setPort(5432)
-        db.setUserName('postgres')
-        db.setPassword('student')
-        db.open()
-
-        
-
-        # queru = QSqlTableModel()
-        # sql ="SELECT * FROM public.staff"
-        # queru.setQuery(QSqlQuery(sql))
-        # print(QSqlQuery(sql).isActive())
-        # self.tableView.setModel(queru)
-        # self.tableView.setColumnHidden(0, True)
-
-
-        
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -92,8 +71,8 @@ class Admin(QMainWindow):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         
-        self.pushButton_Out.clicked.connect(self.Exit)
-        self.pushButton_dobav.clicked.connect(self.Dobav)
+        # self.pushButton_Out.clicked.connect(self.Exit)
+        # self.pushButton_dobav.clicked.connect(self.Dobav)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -104,23 +83,16 @@ class Admin(QMainWindow):
         self.pushButton_dobav.setText(_translate("MainWindow", "Добавить"))
         self.pushButton_Out.setText(_translate("MainWindow", "Выход"))
 
-        self.lineEdit_password.setText(str(random.randint(100000,900000)))
+    #     self.lineEdit_password.setText(str(random.randint(100000,900000)))
         
 
-    def Exit(self):
-        self.close()
+    # def Exit(self):
+    #     self.close()
 
-    def Dobav(self):
-        q = f"INSERT INTO public.staff (login, password, role_id) VALUES ('{self.lineEdit_Login.text()}', '{self.lineEdit_password.text()}', '1')"
-        # db = QSqlDatabase.addDatabase('QPSQL')
-        # db.setDatabaseName('progect')
-        # db.setHostName('localhost')
-        # db.setPort(5432)
-        # db.setUserName('postgres')
-        # db.setPassword('student')
-        # db.open()
+    # def Dobav(self):
+    #     q = f"INSERT INTO public.staff (login, password, role_id) VALUES ('{self.lineEdit_Login.text()}', '{self.lineEdit_password.text()}', '1')"
         
-        queru = QSqlQuery(q)
-        print(queru.isActive())
-        queru.exec()
+    #     queru = QSqlQuery(q)
+    #     print(queru.isActive())
+    #     queru.exec()
         

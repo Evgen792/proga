@@ -1,4 +1,3 @@
-import sys
 from PyQt5.QtSql import QSqlDatabase,QSqlQuery, QSqlQueryModel
 from PyQt5.QtWidgets import *
 import PCM
@@ -7,11 +6,17 @@ from PyQt5.QtCore import *
 from progeckt import prog
 from PyQt5.QtCore import *
 import random
-from Derector import derector
+from progeckt import prog
 import spisok
-from Manager import Managers
+from Man import Managers
 from captcha import Captcha
 from admin import Admin
+from Derector import Derector 
+from spisok import Spisoc
+import random
+from PyQt5.QtCore import *
+from spisok import Spisoc
+
 
 
 class Airport(PCM.Ui_MainWindow):
@@ -24,10 +29,8 @@ class Airport(PCM.Ui_MainWindow):
         db.setUserName('postgres')
         db.setPassword('student')
         db.open()
-
         self.setupUi(self)
-       
-
+    
         self.pushButton.clicked.connect(self.Enter)
         self.pushButton_2.clicked.connect(self.guest)
         self.pushButton_3.clicked.connect(self.Exit)
@@ -38,113 +41,204 @@ class Airport(PCM.Ui_MainWindow):
         query.exec(f"SELECT * FROM public.staff WHERE login = '{self.lineEdit_Login.text()}' AND password = '{self.lineEdit_Pass.text()}'")
         if query.first():
             if query.value(3) == 2:
-                self.sw = derector()
+                self.sw = Derector2()
                 self.sw.show()
             elif query.value(3) == 1:
-                self.sw = Managers()
+                
+                self.sw = Managers2()
                 self.sw.show()
-            # elif self.lineEdit_Login.text() =="Admin" and self.lineEdit_Pass.text() =="Admin":
-            #     self.sw = Admin()
-            #     self.sw.show()
+            
         else:
             QMessageBox.critical(self, "ОШИБКА", "Логин или пароль не верный")
-            self.sw = Captcha()
-            self.sw.setupUi(self.sw)
-            self.sw.show()
+            self.sw = Captcha1()
             
+            self.sw.show()
 
     def guest(self):
-        self.sw = prog()
+        self.sw = prog1()
         self.sw.show()
 
-    
     def Dobav(self):
         self.go = spisok()
         self.sw.show()
         
     def Exit(self):
-        exe.close()
+        self.close()
     
     def Admin(self):
         if self.lineEdit_Login.text() == "Admin" and self.lineEdit_Pass.text() =="Admin":
-            self.sw = Admin()
+            self.sw = Admin1()
             self.sw.setupUi(self.sw)
             self.sw.show()
 
+
+class Managers2(Managers):
     
+    def __init__(self):
+        super().__init__()
+        
+        self.setupUi(self)
+        queru = QSqlTableModel()
+        sql ="SELECT * FROM public.projects"
+        queru.setQuery(QSqlQuery(sql))
+        print(QSqlQuery(sql).isActive())
+        self.tableView.setModel(queru)
+        self.tableView.setColumnHidden(0, True)
+
+        self.pushButton_Exit.clicked.connect(self.Exit)
+        self.pushButton_dobav.clicked.connect(self.Dobav)
+
+    def Exit(self):
+        self.close()
+
+    def Dobav(self):
+        self.go = Spisoc(self.tableView)
+        self.go.setupUi(self.go)
+        self.go.show()
 
 
-# class Captcha(QMainWindow):
-#     def __init__(self):
-#         super().__init__()
-        
-#         self.setWindowFlags(Qt.FramelessWindowHint)
-#         layout  = QVBoxLayout()
-#         self.captcha_lbl = QLabel("Введите капчу:")
-#         self.captcha_box= QLineEdit()
-#         self.timer_lbl = QLabel("Таймер:10")
-#         self.capth_ver = QPushButton("Проверить")
-#         self.captcha_ran = QLabel(str(random.randint(1000,9000)))
-        
-#         self.timer = QTimer()
-#         self.count = 10
-#         self.timer_lbl.setText(str(self.count))
-#         self.timer.timeout.connect(self.timer_tick)
-        
-        
-        
-#         layout.addWidget(self.captcha_lbl)
-#         layout.addWidget(self.captcha_ran)
-#         layout.addWidget(self.captcha_box)
-#         layout.addWidget(self.timer_lbl)
-#         layout.addWidget(self.capth_ver)
-        
-#         self.capth_ver.clicked.connect(self.ver)
-        
-#         widget = QWidget()
-#         widget.setLayout(layout)
-#         self.setCentralWidget(widget)
+class Derector2(Derector):
+
+    def __init__(self):
+        super().__init__()
+
+        self.setupUi(self)
+        queru = QSqlTableModel()
+        sql ="SELECT * FROM public.projects"
+        queru.setQuery(QSqlQuery(sql))
+        print(QSqlQuery(sql).isActive())
+        self.tableView.setModel(queru)
+        self.tableView.setColumnHidden(0, True)
+
+        self.pushButton_Exit.clicked.connect(self.Exit)
+        self.pushButton_dobav.clicked.connect(self.Dobav)
+
+
+    def Delete(self):
+        query = QSqlTableModel()
+        query.setTable("projects")
+        query.select()
+        selected = self.tableView.selectedIndexes()
+        rows = set(index.row() for index in selected)
+        rows = list(rows)
+        rows.sort()
+        first = rows[0]
+        query.removeRow(first)
+        query.select()
+        query =QSqlTableModel()
+        query.setTable("projects")
+        query.select()
+        self.tableView.setModel(query)
+
+    def Exit(self):
+        self.close()
+
+    def Dobav(self):
+        self.go = Spisoc(self.tableView)
+        self.go.setupUi(self.go)
+        self.go.show()
+
+
+class Spisoc(Spisoc):
     
-#     def ver (self):
-            
-        
-#         if self.captcha_box.text() == self.captcha_ran.text():
-#             QMessageBox.information(self, "Успех", "Капча введена правильно")
-#             Captcha.close(self)
-            
-            
-#         else:
-#             self.captcha_box.setDisabled(True)
-#             self.timer.start()
-#             QMessageBox.critical(self, "ОШИБКА", "Вы ввели неправильно")
-            
-            
-        
-            
-#     def timer_tick(self):
-#         self.timer.start(1000)
-#         self.count -=1
-#         self.timer_lbl.setText(str(self.count))
-        
-#         if  self.count == 0:
-#             self.timer.stop()
-#             self.captcha_box.setDisabled(False)
+    def __init__(self, t):
+        super().__init__()
+        self.tableView = t
+        self.setupUi(self)
 
+    def add(self):
+        q = f"INSERT INTO public.projects (name, text, director_id, manager_id, change_id, city_id, street, index) VALUES ('{self.lineEdit_name.text()}', '{self.lineEdit_text.text()}', '{self.lineEdit_director.text()}', '{self.lineEdit_manage.text()}', '{self.lineEdit_change.text()}', '{self.lineEdit_city.text()}', '{self.lineEdit_street.text()}', '{self.lineEdit_index.text()}')"
+        queru = QSqlQuery(q)
+        print(queru.isActive())
+        queru.exec()
+        t = QSqlQueryModel()
+        t.setQuery("SELECT * FROM public.projects")
+        self.tableView.setModel(t)
+        self.close()
+
+    def Exit(self):
+        self.close()
+
+
+class Captcha1(Captcha):
+    def __init__(self):
+        super().__init__()
+        
     
+        self.setupUi(self)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.label_Kapcha.setText(str(random.randint(1000,9000)))
+        
+        self.timer = QTimer()
+        self.count = 10
+        self.label_Time.setText(str(self.count))
+        self.timer.timeout.connect(self.timer_tick)
+        
+        self.pushButton.clicked.connect(self.ver)
+        
+    
+    def ver (self):
+            
+        
+        if self.lineEdit_kapcha.text() == self.label_Kapcha.text():
+            QMessageBox.information(self, "Успех", "Капча введена правильно")
+            self.close()
+            
+            
+        else:
+            self.lineEdit_kapcha.setDisabled(True)
+            self.timer.start()
+            QMessageBox.critical(self, "ОШИБКА", "Вы ввели неправильно")
+            self.timer_tick()
+            
+            
+        
+            
+    def timer_tick(self):
+        self.timer.start(1000)
+        self.count -=1
+        self.label_Time.setText(str(self.count))
+        
+        if  self.count == 0:
+            self.timer.stop()
+            self.count =10
+            self.lineEdit_kapcha.setDisabled(False)
 
-app = QApplication(sys.argv)
-exe = Airport()
-exe.show()
-app.exec()
+class prog1(prog):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        queru = QSqlTableModel()
+        sql ="SELECT * FROM public.projects"
+        queru.setQuery(QSqlQuery(sql))
+        print(QSqlQuery(sql).isActive())
+        self.tableView.setModel(queru)
+        self.tableView.setColumnHidden(0, True)
+
+        self.pushButton_2.clicked.connect(self.Exit)
+
+    def Exit(self):
+        self.close()
+
+class Admin1(Admin):
+     
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+        self.pushButton_Out.clicked.connect(self.Exit)
+        self.pushButton_dobav.clicked.connect(self.Dobav)
+
+        self.lineEdit_password.setText(str(random.randint(100000,900000)))
+        
+    def Dobav(self):
+        q = f"INSERT INTO public.staff (login, password, role_id) VALUES ('{self.lineEdit_Login.text()}', '{self.lineEdit_password.text()}', '1')"
+        
+        queru = QSqlQuery(q)
+        print(queru.isActive())
+        queru.exec()
 
 
-
-# q = f"SELECT * FROM public.staff"
-        # print(q)
-        # queru = QSqlQuery(q)
-        # print(queru.isActive())
-        # queru.exec()
-        # print(queru.first())
-        # if queru.first():
-        #     self.sw = derector()
-        #     self.sw.show()
+    def Exit(self):
+        self.close()

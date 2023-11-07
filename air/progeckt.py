@@ -1,6 +1,3 @@
-
-
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 
@@ -8,33 +5,6 @@ class prog(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
-
-        
-        self.setupUi(self)
-        db = QSqlDatabase.addDatabase('QPSQL')
-        db.setDatabaseName('progect')
-        db.setHostName('localhost')
-        db.setPort(5432)
-        db.setUserName('postgres')
-        db.setPassword('student')
-        db.open()
-
-        
-
-        queru = QSqlTableModel()
-        sql ="SELECT * FROM public.projects"
-        queru.setQuery(QSqlQuery(sql))
-        print(QSqlQuery(sql).isActive())
-        self.tableView.setModel(queru)
-        self.tableView.setColumnHidden(0, True)
-
-        # if queru.isActive():
-        #     print("ok")
-        # else:
-        #     print("No")
-
-
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -76,57 +46,3 @@ class prog(QMainWindow):
         self.pushButton.setText(_translate("MainWindow", "Просмотреть "))
         self.pushButton_2.setText(_translate("MainWindow", "Выход"))
         self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:28pt; font-weight:600; font-style:italic;\">Проекты </span></p></body></html>"))
-
-    def Exit(self):
-        self.close()
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import *
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery, QSqlTableModel
-from spisok import spisoc
-
-class derector(QMainWindow):
-
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
-
-        self.setupUi(self)
-        db = QSqlDatabase.addDatabase('QPSQL')
-        db.setDatabaseName('progect')
-        db.setHostName('localhost')
-        db.setPort(5432)
-        db.setUserName('postgres')
-        db.setPassword('student')
-        db.open()
-
-        
-
-        queru = QSqlTableModel()
-        sql ="SELECT * FROM public.projects"
-        queru.setQuery(QSqlQuery(sql))
-        print(QSqlQuery(sql).isActive())
-        self.tableView.setModel(queru)
-        self.tableView.setColumnHidden(0, True)
-
-
-        self.pushButton_Exit.clicked.connect(self.Exit)
-        self.pushButton_dobav.clicked.connect(self.Dobav)
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_Exit.setText(_translate("MainWindow", "Выход"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-size:26pt; font-weight:400;\">Director</span></p></body></html>"))
-        self.pushButton_prosmtr.setText(_translate("MainWindow", "Посмотреть "))
-        self.pushButton_delete.setText(_translate("MainWindow", "Удалить"))
-        self.label_2.setText(_translate("MainWindow", "Вы авторизировались как руководитель проекта"))
-        self.pushButton_dobav.setText(_translate("MainWindow", "Добавить"))
-
-    def Exit(self):
-        self.close()
-
-    def Dobav(self):
-        self.go = spisoc(self.tableView)
-        self.go.setupUi(self.go)
-        self.go.show()

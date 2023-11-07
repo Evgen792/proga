@@ -2,8 +2,7 @@
 
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore, QtGui, QtWidgets
-import random
-from PyQt5.QtCore import *
+
 
 class Captcha(QMainWindow):
     def setupUi(self, MainWindow):
@@ -76,45 +75,3 @@ class Captcha(QMainWindow):
         self.label.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Введите капчу:</span></p></body></html>"))
         self.pushButton.setText(_translate("MainWindow", "Проверить"))
         self.label_Time.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
-
-
-
-        
-        self.setWindowFlags(Qt.FramelessWindowHint)
-        self.label_Kapcha.setText(str(random.randint(1000,9000)))
-        
-        self.timer = QTimer()
-        self.count = 10
-        self.label_Time.setText(str(self.count))
-        self.timer.timeout.connect(self.timer_tick)
-        
-        self.pushButton.clicked.connect(self.ver)
-        
-    
-    def ver (self):
-            
-        
-        if self.lineEdit_kapcha.text() == self.label_Kapcha.text():
-            QMessageBox.information(self, "Успех", "Капча введена правильно")
-            self.close()
-            
-            
-        else:
-            self.lineEdit_kapcha.setDisabled(True)
-            self.timer.start()
-            QMessageBox.critical(self, "ОШИБКА", "Вы ввели неправильно")
-            self.timer_tick()
-            
-            
-        
-            
-    def timer_tick(self):
-        self.timer.start(1000)
-        self.count -=1
-        self.label_Time.setText(str(self.count))
-        
-        if  self.count == 0:
-            self.timer.stop()
-            self.count =10
-            self.lineEdit_kapcha.setDisabled(False)
-

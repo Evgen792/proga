@@ -3,18 +3,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtSql import *
 
 
-class spisoc(QMainWindow):
+class Spisoc(QMainWindow):
     
-    def __init__(self, t):
-        super().__init__()
-        self.tableView = t
-        self.setupUi(self)
-
-      
-
-        
-    def setupUi(self, MainWindow):
-        
+    def setupUi(self, MainWindow): 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(994, 319)
         MainWindow.setStyleSheet("background-color: rgb(218, 207, 183);")
@@ -156,25 +147,3 @@ class spisoc(QMainWindow):
         self.pushButton_dobav.setText(_translate("MainWindow", "Добавить"))
         self.pushButton_Exit.setText(_translate("MainWindow", "Назад"))
         self.label_9.setText(_translate("MainWindow", "<html><head/><body><p align=\"center\">Внесите данные проекта</p></body></html>"))
-
-    def add(self):
-        q = f"INSERT INTO public.projects (name, text, director_id, manager_id, change_id, city_id, street, index) VALUES ('{self.lineEdit_name.text()}', '{self.lineEdit_text.text()}', '{self.lineEdit_director.text()}', '{self.lineEdit_manage.text()}', '{self.lineEdit_change.text()}', '{self.lineEdit_city.text()}', '{self.lineEdit_street.text()}', '{self.lineEdit_index.text()}')"
-        # db = QSqlDatabase.addDatabase('QPSQL')
-        # db.setDatabaseName('progect')
-        # db.setHostName('localhost')
-        # db.setPort(5432)
-        # db.setUserName('postgres')
-        # db.setPassword('student')
-        # db.open()
-        
-        queru = QSqlQuery(q)
-        print(queru.isActive())
-        queru.exec()
-        t = QSqlQueryModel()
-        t.setQuery("SELECT * FROM public.projects")
-        self.tableView.setModel(t)
-        self.close()
-
-
-    def Exit(self):
-        self.close()
